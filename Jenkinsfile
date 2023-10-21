@@ -5,14 +5,14 @@ pipeline {
         stages {
             stage('Source') {
                 steps {
-                    git url: 'https://github.com/shanthshivam/sample-java-maven.git'
+                    git url: 'https://github.com/jaydeepvagadiya/sample-java-maven.git'
                 }
             }
             stage('Build') {
                 steps {
                     script {
                         def mvnHome = tool 'M3'
-                        bat "${mvnHome}\\bin\\mvn -B verify"
+                        sh "${mvnHome}/bin/mvn -B verify"
                     }
                 }
             }
@@ -21,7 +21,7 @@ pipeline {
                     script {
                         def mvnHome = tool 'M3'
                         withSonarQubeEnv() {
-                            bat "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java-maven"
+                            sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=java-maven"
                         }
                     }
                 }
