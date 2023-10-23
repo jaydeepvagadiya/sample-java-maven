@@ -30,7 +30,9 @@ pipeline {
             stage('Test') {
                 steps {
                     step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+                    script {
                     sh "${mvnHome}/bin/mvn test"
+                    }
                 }
             }
             stage('Packaging') {
