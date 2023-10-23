@@ -31,7 +31,8 @@ pipeline {
                 steps {
                     step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
                     script {
-                    sh "${mvnHome}/bin/mvn test"
+                        def mvnHome = tool 'M3'
+                        sh "${mvnHome}/bin/mvn test"
                     }
                 }
             }
