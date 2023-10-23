@@ -29,13 +29,19 @@ pipeline {
             
             stage('Test') {
                 steps {
-                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
                     script {
                         def mvnHome = tool 'M3'
                         sh "${mvnHome}/bin/mvn test"
                     }
                 }
             }
+
+            stage('Publish Test Results') {
+                steps {
+                    step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+                }
+            }
+            
             stage('Packaging') {
                 steps {
                     step([$class: 'ArtifactArchiver', artifacts: '**/target/*.jar', fingerprint: true])
